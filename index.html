@@ -9,37 +9,63 @@
 <body>
     <div class="ui-page ui-page-active" id="main">
         <div class="calculator-container">
-            <!-- Display -->
-            <div class="display">
-                <div class="display-meta" id="display-meta"></div>
-                <div class="display-text" id="display">0</div>
+            <div class="safe-area" id="safe-area">
+                <!-- Display -->
+                <div class="display">
+                    <div class="display-text" id="display"></div>
+                </div>
+                <div class="display-swipe" id="display-swipe" aria-hidden="true"></div>
+
+                <!-- Calculator Grid -->
+                <div class="calc-grid">
+                    <div class="grid-group grid-basic">
+                        <button class="btn btn-number btn-basic" data-number="1">1</button>
+                        <button class="btn btn-number btn-basic" data-number="2">2</button>
+                        <button class="btn btn-number btn-basic" data-number="3">3</button>
+                        <button class="btn btn-operator btn-basic" data-operator="+">+</button>
+                        <button class="btn btn-operator btn-basic" data-operator="-">−</button>
+
+                        <button class="btn btn-number btn-basic" data-number="4">4</button>
+                        <button class="btn btn-number btn-basic" data-number="5">5</button>
+                        <button class="btn btn-number btn-basic" data-number="6">6</button>
+                        <button class="btn btn-operator btn-basic" data-operator="*">×</button>
+                        <button class="btn btn-operator btn-basic" data-operator="/">÷</button>
+
+                        <button class="btn btn-number btn-basic" data-number="7">7</button>
+                        <button class="btn btn-number btn-basic" data-number="8">8</button>
+                        <button class="btn btn-number btn-basic" data-number="9">9</button>
+                        <button class="btn btn-function btn-basic" data-action="paren">()</button>
+                    </div>
+
+                    <div class="grid-group grid-sci">
+                        <button class="btn btn-sci" data-action="toggle-angle" id="angle-toggle">Rad</button>
+                        <button class="btn btn-sci" data-func="sqrt">√</button>
+                        <button class="btn btn-sci" data-func="abs">|x|</button>
+                        <button class="btn btn-sci" data-func="sin">sin</button>
+                        <button class="btn btn-sci" data-func="cos">cos</button>
+
+                        <button class="btn btn-sci" data-func="tan">tan</button>
+                        <button class="btn btn-sci" data-const="pi">π</button>
+                        <button class="btn btn-sci" data-func="ln">ln</button>
+                        <button class="btn btn-sci" data-func="log">log</button>
+                        <button class="btn btn-sci" data-func="inv">1/x</button>
+
+                        <button class="btn btn-sci" data-const="e">e</button>
+                        <button class="btn btn-sci" data-action="exp">e^x</button>
+                        <button class="btn btn-sci" data-action="pow2">x^2</button>
+                        <button class="btn btn-sci" data-action="pow">x^y</button>
+                    </div>
+
+                    <button class="btn btn-function" data-action="clear">C</button>
+
+                    <div class="grid-spacer" aria-hidden="true"></div>
+                    <button class="btn btn-number" data-number="0">0</button>
+                    <button class="btn btn-number" data-number=".">.</button>
+                    <button class="btn btn-equals" data-action="equals">=</button>
+                </div>
+                <button class="btn btn-aux" data-action="more">…</button>
             </div>
-
-            <!-- Calculator Grid -->
-            <div class="calc-grid">
-                <button class="btn btn-function" data-action="clear">C</button>
-                <button class="btn btn-function" data-action="backspace">⌫</button>
-                <button class="btn btn-operator" data-operator="/">÷</button>
-                <button class="btn btn-operator" data-operator="*">×</button>
-
-                <button class="btn btn-number" data-number="7">7</button>
-                <button class="btn btn-number" data-number="8">8</button>
-                <button class="btn btn-number" data-number="9">9</button>
-                <button class="btn btn-operator" data-operator="-">−</button>
-
-                <button class="btn btn-number" data-number="4">4</button>
-                <button class="btn btn-number" data-number="5">5</button>
-                <button class="btn btn-number" data-number="6">6</button>
-                <button class="btn btn-operator" data-operator="+">+</button>
-
-                <button class="btn btn-number" data-number="1">1</button>
-                <button class="btn btn-number" data-number="2">2</button>
-                <button class="btn btn-number" data-number="3">3</button>
-                <button class="btn btn-equals" data-action="equals">=</button>
-
-                <button class="btn btn-number btn-zero" data-number="0">0</button>
-                <button class="btn btn-number" data-number=".">.</button>
-            </div>
+            <div class="toast" id="toast" aria-live="polite"></div>
         </div>
     </div>
 
