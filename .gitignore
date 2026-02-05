@@ -1,0 +1,9 @@
+.DS_Store
+.metadata
+.buildResult
+.manifest.tmp
+
+# Tizen build artifacts
+*.wgt
+author-signature.xml
+signature*.xml
