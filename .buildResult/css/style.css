@@ -1,0 +1,162 @@
+/* Galaxy Watch 3 Calculator - 360x360 display */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+html, body {
+    width: 360px;
+    height: 360px;
+    overflow: hidden;
+    background-color: #000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ui-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator-container {
+    width: 320px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+/* Display */
+.display {
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    padding: 0 16px;
+    margin-bottom: 8px;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+}
+
+.display-meta {
+    min-height: 14px;
+    font-size: 14px;
+    line-height: 1;
+    color: #9a9a9a;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.display-text {
+    font-size: 36px;
+    font-weight: 300;
+    color: #fff;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Calculator grid */
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 6px;
+    flex: 1;
+    padding: 0 12px;
+}
+
+/* Base button styles */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 400;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.1s;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+}
+
+.btn:active {
+    transform: scale(0.92);
+}
+
+/* Number buttons */
+.btn-number {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-number:active {
+    background-color: #555;
+}
+
+/* Zero button - spans 2 columns */
+.btn-zero {
+    grid-column: span 2;
+    border-radius: 25px;
+}
+
+/* Operator buttons */
+.btn-operator {
+    background-color: #007aff;
+    color: #fff;
+}
+
+.btn-operator:active {
+    background-color: #3395ff;
+}
+
+.btn-operator.is-active {
+    background-color: #ff9500;
+}
+
+/* Function buttons (C, backspace) */
+.btn-function {
+    background-color: #a5a5a5;
+    color: #000;
+}
+
+.btn-function:active {
+    background-color: #d4d4d4;
+}
+
+/* Equals button - spans 2 rows */
+.btn-equals {
+    grid-row: span 2;
+    background-color: #007aff;
+    color: #fff;
+    border-radius: 25px;
+}
+
+.btn-equals:active {
+    background-color: #3395ff;
+}
+
+/* Focus states for accessibility */
+.btn:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+/* Hide focus ring for mouse users */
+.btn:focus:not(:focus-visible) {
+    outline: none;
+}
