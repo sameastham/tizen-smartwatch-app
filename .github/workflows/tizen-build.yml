@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TIZEN_SDK: /home/runner/tizen-studio
-      PATH: ${{ env.PATH }}:/home/runner/tizen-studio/tools/ide/bin:/home/runner/tizen-studio/tools/cli
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,11 +24,13 @@ jobs:
 
       - name: Add Tizen CLI to PATH
         run: |
-          echo "$HOME/tizen-studio/tools/ide/bin" >> $GITHUB_PATH
-          echo "$HOME/tizen-studio/tools/cli" >> $GITHUB_PATH
+          echo "$TIZEN_SDK/tools/ide/bin" >> $GITHUB_PATH
+          echo "$TIZEN_SDK/tools/cli/bin" >> $GITHUB_PATH
 
       - name: Verify Tizen CLI
         run: |
+          ls -la "$TIZEN_SDK/tools/cli/bin" || true
+          ls -la "$TIZEN_SDK/tools/ide/bin" || true
           which tizen
           tizen version
 
