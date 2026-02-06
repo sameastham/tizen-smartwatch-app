@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TIZEN_SDK: /home/runner/tizen-studio
-      TIZEN_CLI: /home/runner/tizen-studio/tools/cli/tizen
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,6 +26,16 @@ jobs:
         run: |
           echo "$TIZEN_SDK/tools/ide/bin" >> $GITHUB_PATH
           echo "$TIZEN_SDK/tools/cli" >> $GITHUB_PATH
+
+      - name: Locate Tizen CLI
+        run: |
+          CANDIDATE="$(find "$TIZEN_SDK" "$GITHUB_WORKSPACE" -type f -name tizen 2>/dev/null | head -n 1)"
+          if [ -z "$CANDIDATE" ]; then
+            echo "Tizen CLI not found" >&2
+            exit 1
+          fi
+          chmod +x "$CANDIDATE"
+          echo "TIZEN_CLI=$CANDIDATE" >> $GITHUB_ENV
 
       - name: Verify Tizen CLI
         run: |
