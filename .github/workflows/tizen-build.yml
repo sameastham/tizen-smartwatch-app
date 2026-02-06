@@ -56,7 +56,16 @@ jobs:
 
       - name: Build WGT
         run: |
-          "$TIZEN_CLI" build-web -- "$GITHUB_WORKSPACE" -out dist
+          "$TIZEN_CLI" build-web -- "$GITHUB_WORKSPACE" -out dist || true
+          if [ -f "$HOME/tizen-studio-data/cli/logs/cli.log" ]; then
+            echo "---- tizen cli log ----"
+            cat "$HOME/tizen-studio-data/cli/logs/cli.log"
+            echo "------------------------"
+          fi
+          if [ ! -d dist ]; then
+            echo "Build output missing" >&2
+            exit 1
+          fi
           "$TIZEN_CLI" package -t wgt -s github-profile -o dist -- dist
           ls -la dist
 
