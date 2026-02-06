@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TIZEN_SDK: /home/runner/tizen-studio
+      TIZEN_CLI: /home/runner/tizen-studio/tools/cli/bin/tizen
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,8 +32,7 @@ jobs:
         run: |
           ls -la "$TIZEN_SDK/tools/cli/bin" || true
           ls -la "$TIZEN_SDK/tools/ide/bin" || true
-          which tizen
-          tizen version
+          "$TIZEN_CLI" version
 
       - name: Setup signing
         env:
@@ -41,13 +41,13 @@ jobs:
         run: |
           mkdir -p ~/.tizen
           echo "$AUTHOR_P12_B64" | base64 -d > author.p12
-          tizen certificate-author -a "github" -p "$AUTHOR_P12_PASSWORD" -c "$PWD/author.p12"
-          tizen security-profiles add -n github-profile -a github
+          "$TIZEN_CLI" certificate-author -a "github" -p "$AUTHOR_P12_PASSWORD" -c "$PWD/author.p12"
+          "$TIZEN_CLI" security-profiles add -n github-profile -a github
 
       - name: Build WGT
         run: |
-          tizen build-web -t . -o dist
-          tizen package -t wgt -s github-profile -o dist -- dist
+          "$TIZEN_CLI" build-web -t . -o dist
+          "$TIZEN_CLI" package -t wgt -s github-profile -o dist -- dist
           ls -la dist
 
       - name: Upload artifact
