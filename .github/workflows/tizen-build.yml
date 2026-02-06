@@ -50,10 +50,13 @@ jobs:
         run: |
           mkdir -p ~/.tizen
           echo "$AUTHOR_P12_B64" | base64 -d > author.p12
+          echo "author.p12 bytes: $(wc -c < author.p12)"
+          sha256sum author.p12 | awk '{print "author.p12 sha256:", $1}'
           "$TIZEN_CLI" security-profiles add -n github-profile -a "$PWD/author.p12" -p "$AUTHOR_P12_PASSWORD" || \
           "$TIZEN_CLI" certificate -a "github" -p "$AUTHOR_P12_PASSWORD" -c "$PWD/author.p12"
           "$TIZEN_CLI" security-profiles add -n github-profile -a github || true
           "$TIZEN_CLI" cli-config "profiles.path=$HOME/tizen-studio-data/profile/profiles.xml" || true
+          "$TIZEN_CLI" security-profiles list || true
 
       - name: Build WGT
         run: |
