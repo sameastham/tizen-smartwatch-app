@@ -54,11 +54,13 @@ jobs:
           sha256sum author.p12 | awk '{print "author.p12 sha256:", $1}'
           echo "author password length: ${#AUTHOR_P12_PASSWORD}"
           printf '%s' "$AUTHOR_P12_PASSWORD" | sha256sum | awk '{print "author password sha256:", $1}'
-          if ! openssl pkcs12 -in author.p12 -passin pass:"$AUTHOR_P12_PASSWORD" -nodes -nokeys >/dev/null 2>&1; then
+          if ! openssl pkcs12 -in author.p12 -passin pass:"$AUTHOR_P12_PASSWORD" -legacy -nodes -nokeys >/dev/null 2>&1; then
             echo "OpenSSL password check failed for author.p12" >&2
             exit 1
           fi
-          "$TIZEN_CLI" security-profiles add -n github-profile -a "$PWD/author.p12" -p "$AUTHOR_P12_PASSWORD" -A -f
+          openssl pkcs12 -in author.p12 -passin pass:"$AUTHOR_P12_PASSWORD" -legacy -nodes -out author.pem
+          openssl pkcs12 -export -in author.pem -out author-legacy.p12 -passout pass:"$AUTHOR_P12_PASSWORD" -legacy
+          "$TIZEN_CLI" security-profiles add -n github-profile -a "$PWD/author-legacy.p12" -p "$AUTHOR_P12_PASSWORD" -A -f
           "$TIZEN_CLI" cli-config "profiles.path=$HOME/tizen-studio-data/profile/profiles.xml" || true
           "$TIZEN_CLI" security-profiles list || true
           "$TIZEN_CLI" package --help || true
