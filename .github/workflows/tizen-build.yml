@@ -56,7 +56,7 @@ jobs:
 
       - name: Build WGT
         run: |
-          "$TIZEN_CLI" build-web -t . -o dist
+          "$TIZEN_CLI" build-web -- "$GITHUB_WORKSPACE" -out dist
           "$TIZEN_CLI" package -t wgt -s github-profile -o dist -- dist
           ls -la dist
 
