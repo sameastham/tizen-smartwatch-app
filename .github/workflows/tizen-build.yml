@@ -53,6 +53,7 @@ jobs:
           echo "author.p12 bytes: $(wc -c < author.p12)"
           sha256sum author.p12 | awk '{print "author.p12 sha256:", $1}'
           echo "author password length: ${#AUTHOR_P12_PASSWORD}"
+          printf '%s' "$AUTHOR_P12_PASSWORD" | sha256sum | awk '{print "author password sha256:", $1}'
           if ! openssl pkcs12 -in author.p12 -passin pass:"$AUTHOR_P12_PASSWORD" -nodes -nokeys >/dev/null 2>&1; then
             echo "OpenSSL password check failed for author.p12" >&2
             exit 1
