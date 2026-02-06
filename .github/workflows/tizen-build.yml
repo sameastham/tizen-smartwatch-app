@@ -67,7 +67,19 @@ jobs:
             echo "Build output missing" >&2
             exit 1
           fi
+          set +e
           "$TIZEN_CLI" package -t wgt -s github-profile -o dist -- dist
+          PACKAGE_EXIT=$?
+          set -e
+          if [ -f "$HOME/tizen-studio-data/cli/logs/cli.log" ]; then
+            echo "---- tizen cli log after package (tail) ----"
+            tail -n 200 "$HOME/tizen-studio-data/cli/logs/cli.log"
+            echo "-------------------------------------------"
+          fi
+          if [ $PACKAGE_EXIT -ne 0 ]; then
+            echo "Packaging failed with exit code $PACKAGE_EXIT" >&2
+            exit $PACKAGE_EXIT
+          fi
           ls -la dist
 
       - name: Upload artifact
