@@ -53,14 +53,15 @@ jobs:
           "$TIZEN_CLI" security-profiles add -n github-profile -a "$PWD/author.p12" -p "$AUTHOR_P12_PASSWORD" || \
           "$TIZEN_CLI" certificate -a "github" -p "$AUTHOR_P12_PASSWORD" -c "$PWD/author.p12"
           "$TIZEN_CLI" security-profiles add -n github-profile -a github || true
+          "$TIZEN_CLI" cli-config "profiles.path=$HOME/tizen-studio-data/profile/profiles.xml" || true
 
       - name: Build WGT
         run: |
           "$TIZEN_CLI" build-web -- "$GITHUB_WORKSPACE" -out dist || true
           if [ -f "$HOME/tizen-studio-data/cli/logs/cli.log" ]; then
-            echo "---- tizen cli log ----"
-            cat "$HOME/tizen-studio-data/cli/logs/cli.log"
-            echo "------------------------"
+            echo "---- tizen cli log (tail) ----"
+            tail -n 200 "$HOME/tizen-studio-data/cli/logs/cli.log"
+            echo "------------------------------"
           fi
           if [ ! -d dist ]; then
             echo "Build output missing" >&2
